@@ -1,0 +1,117 @@
+@use "../abstracts" as *;
+
+.sidebar {
+    @include dimension(220px, calc(100vh - 100px));
+    position: fixed;
+    margin: 50px;
+    border-radius: 16px;
+    @include card-background($card-background);
+    box-shadow: $card-background-hover;
+    transition: $transition;
+    animation: appearFromLeft .9s ease-out;
+    &.collapsed {
+        width: 85px;
+        .sidebar-header .toggler {
+            transform: translate(-4px, 65px);
+            span {
+                transform: rotate(180deg);
+            }        
+        }
+        .sidebar-nav {
+            .primary-nav {
+                transform: translateY(65px);
+            }
+            .nav-link .nav-label {
+                opacity: 0;
+                pointer-events: none;
+            }
+            .nav-tooltip {
+                display: block;
+            }
+        }
+    }
+
+    &-header{
+        @include align-items(space-between, relative);
+        padding: 25px 20px;
+        .header-logo img {
+            @include dimension(46px, 46px);
+            display: block;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .toggler {
+            @include dimension(35px, 35px);
+            @include align-items(center, absolute);
+            right: 20px;
+            border: none;
+            border-radius: 8px;
+            color: $black-color;
+            cursor: pointer;
+            @include card-background($card-background);
+            transition: $transition;
+            span {
+                font-size: $normal-font-size;
+                transition: $transition;
+            }
+            &:hover {
+                background: $card-backgroundh;
+            }
+        }
+    }
+
+    &-nav {
+        .nav-list {
+            list-style: none;
+            display: flex;
+            gap: 4px;
+            padding: 12px 15px;
+            flex-direction: column;
+            transform: translateY(15px);
+            transform: $transition;
+        }
+        .nav-link {
+            color: $black-color;
+            @include align-item();
+            gap: 12px;
+            white-space: nowrap;
+            border-radius: 8px;
+            padding: 12px 15px;
+            text-decoration: none;
+            transition: $transition;
+            &:hover {
+                box-shadow: $card-background-hover;
+            }
+            .nav-label {
+                transition: opacity $transition;
+            }
+        }
+        .nav-item {
+            position: relative;
+            &:hover .nav-tooltip {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(50%);
+                transition: $transition;
+            }
+        }
+        .nav-tooltip {
+            @include position-absolute(auto, -10px, auto, calc(100% + 25px), auto);
+            opacity: 0;
+            display: none;
+            pointer-events: none;
+            color: $primary-color;
+            padding: 12px 20px;
+            border-radius: 8px;
+            background-color: $secondary-color;
+            white-space: nowrap;
+            box-shadow: $box-shadow;
+            transition: 0s;
+        }
+        .secondary-nav {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+        }
+    }
+}

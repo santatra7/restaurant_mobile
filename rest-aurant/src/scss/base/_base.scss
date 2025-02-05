@@ -1,0 +1,30 @@
+@use "../abstracts" as *;
+
+/*=============== BASE ===============*/
+*{
+	margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+	font-family: $body-fonts;
+	font-size: $normal-font-size;
+}
+
+html{
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 9rem;
+    &::-webkit-scrollbar{
+        width: .8rem;
+    }
+}
+
+body{	
+	overflow: visible;
+    position: relative;
+    min-height: 100vh;
+}
+
+a{
+	text-decoration: none;
+}

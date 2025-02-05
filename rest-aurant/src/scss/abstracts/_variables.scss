@@ -1,0 +1,33 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+
+/*=============== COLORS ===============*/
+$primary-color: hsl(337, 53%, 85%);
+$secondary-color: #cc2e63;
+$text-color: #333;
+$black-color: hsl(229, 19%, 17%);
+$hover-shadow-color: rgba(52, 152, 219, 0.4);
+$focus-shadow-color: rgba(52, 152, 219, 0.2);
+$reflection-color: hsla(0, 0%, 100%, 0.449);
+$gradient-color: linear-gradient(90deg,
+                     hsl(60, 72%, 55%) 0%,
+                     hsl(49, 79%, 51%));
+$box-shadow:
+        0px 10px 20px rgba(0, 0, 0, 0.2), /* Ombre principale */
+        0px 6px 6px rgba(0, 0, 0, 0.15);   /* Ombre secondaire pour plus de profondeur */
+
+
+/*=============== FONTS ===============*/
+$body-fonts: 'Montserrat', sans-serif;
+$normal-font-size: 1rem;
+
+/*=============== BACKGROUND-IMAGES ===============*/
+$background-animated : "../assets/images/fond.gif";
+$background-images : "../assets/images/fond.png";
+$card-background: linear-gradient(-180deg, hsla(0, 0%, 100%, 0.759), hsla(250, 40%, 61%, 0.468));
+$card-backgroundh: linear-gradient(-180deg, hsla(250, 40%, 61%, 0.41), hsla(0, 0%, 100%, 0.497));
+$card-background-hover: 6px 6px 24px hsla(314, 50%, 75%, 0.538), -6px -6px 24px hsla(327, 66%, 61%, 0.697), 
+                        inset -6px -6px 24px hsla(331, 50%, 59%, 0.504), inset 6px 6px 24px hsla(335, 50%, 47%, 0.518);
+
+/*=============== ANIMATIONS ===============*/
+$transition : .4s ease;

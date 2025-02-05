@@ -1,0 +1,19 @@
+src/
+├── assets/         # Images, polices, etc.
+├── components/     # Composants Vue (Atomic Design)
+│   ├── atoms/      # Composants les plus basiques (boutons, icônes, etc.)
+│   ├── molecules/  # Combinaisons d'atomes (ex: champs de formulaire)
+│   ├── organisms/  # Groupes complexes de molécules (ex: barres latérales)
+│   ├── templates/  # Layouts ou pages semi-complètes
+│   └── pages/      # Pages finales de l'application
+├── composables/    # Hooks ou utilitaires réutilisables (ex: useFetch)
+├── layouts/        # Layouts principaux (ex: BackofficeLayout)
+├── router/         # Gestion des routes Vue Router
+├── scss/           # Styles globaux et variables SCSS
+│   ├── abstracts/  # Variables, mixins, fonctions
+│   ├── base/       # Reset, styles de base
+│   ├── components/ # Styles spécifiques aux composants
+│   └── layouts/    # Styles pour les layouts
+├── store/          # Pinia ou Vuex pour l'état global
+├── utils/          # Fonctions utilitaires globales
+└── views/          # Pages principales (si non utilisées dans components/pages)
