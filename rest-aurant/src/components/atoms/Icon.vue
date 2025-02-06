@@ -1,9 +1,9 @@
 <template>
     <li class="nav-item">
-      <a :href="href" class="nav-link">
+      <router-link :to="href" class="nav-link">
         <span class="nav-icon material-symbols-rounded">{{ icon }}</span>
         <span class="nav-label">{{ label }}</span>
-      </a>
+      </router-link>
       <span class="nav-tooltip">{{ label }}</span>
     </li>
   </template>

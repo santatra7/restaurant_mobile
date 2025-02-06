@@ -1,0 +1,53 @@
+@use "../abstracts" as *;
+
+.stats-container {
+    @include card-background($card-background-dark);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: $box-shadow;
+    width: 100%;
+    margin: auto;
+    color: $primary-color;
+    overflow: hidden;
+    animation: appearFromBottom $transition;
+}
+  
+.stats-title {
+    font-size: 45px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+p{
+    font-size: 15px;
+    font-weight: 100;
+    margin-bottom: 2rem;
+}
+  
+.date-picker {
+    margin-bottom: 1rem;
+    input {
+        padding: 8px;
+        border-radius: 5px;
+        border: none;
+        @include card-background($card-background);
+        color: $black-color;
+        @include dimension(auto, 35px);
+    }
+}
+
+.chart-container {
+    max-width: 100%;
+    height: 300px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    float: right;
+    width: 40%;
+
+    button {
+        @include nav-button();
+    }
+}

@@ -28,6 +28,9 @@ $card-background: linear-gradient(-180deg, hsla(0, 0%, 100%, 0.759), hsla(250, 4
 $card-backgroundh: linear-gradient(-180deg, hsla(250, 40%, 61%, 0.41), hsla(0, 0%, 100%, 0.497));
 $card-background-hover: 6px 6px 24px hsla(314, 50%, 75%, 0.538), -6px -6px 24px hsla(327, 66%, 61%, 0.697), 
                         inset -6px -6px 24px hsla(331, 50%, 59%, 0.504), inset 6px 6px 24px hsla(335, 50%, 47%, 0.518);
+$card-background-dark: linear-gradient(-45deg, hsla(218, 58%, 51%, 0.759), hsla(251, 60%, 16%, 0.573));
+$card-background-dark2: linear-gradient(-90deg, hsla(218, 61%, 45%, 0.736), hsla(251, 60%, 16%, 0.073));        
+$card-background-error: linear-gradient(-180deg, hsla(0, 75%, 57%, 0.759), hsla(0, 74%, 46%, 0.468));
 
 /*=============== ANIMATIONS ===============*/
-$transition : .4s ease;
+$transition : .4s ease-in-out;

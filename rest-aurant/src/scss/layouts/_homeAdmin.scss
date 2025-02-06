@@ -1,0 +1,19 @@
+@use "../abstracts" as *;
+
+.home-admin-container {
+    position: absolute;
+    @include dimension(calc(100% - 280px), calc(100vh - 200px));
+    margin: 130px 150px 200px 200px;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+
+    .left {
+        @include dimension(60%, 80%);
+    }
+
+    .right {
+        @include dimension(38%, 100%);
+    }
+}

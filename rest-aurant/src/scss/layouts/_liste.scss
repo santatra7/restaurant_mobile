@@ -1,0 +1,72 @@
+@use "../abstracts" as *;
+/*=============== LISTES DES PLATS ===============*/
+
+@mixin list($height) {
+    position: relative;
+    max-height: $height;
+    overflow-y: auto; // Active le scroll si nécessaire
+    padding-bottom: 20px;
+
+    /* Masquer la scrollbar sur différents navigateurs */
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE et Edge
+
+    &::-webkit-scrollbar {
+      display: none; // Chrome et Safari
+    }
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 86%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 86%, rgba(0, 0, 0, 0) 100%);
+  
+    .fille {
+      margin-top: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      
+      @for $i from 1 through 6 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.2}s;
+        }
+      }
+    }
+}  
+
+
+@mixin plat-card() {
+  width: 100% ;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  outline: none;
+  article {
+    box-shadow: $card-background-hover;
+    background: $card-background-dark;
+    @include dimension(270px, 270px);
+    padding: 30px;
+    margin: 20px;
+    border-radius: 20px;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    transition: $transition;
+    &:hover{
+      transform: scale(1.1);
+    }
+    figure {
+      width: 140px;
+      @include position-absolute(auto, 10px, auto, 70px, auto);
+    }
+    .text {
+      margin-top: 150px;
+      color: $primary-color;
+      h2 {
+        font-size: 20px;
+      }
+      p {
+        justify-content: center;
+        span {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

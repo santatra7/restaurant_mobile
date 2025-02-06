@@ -26,13 +26,13 @@ export default {
   data() {
     return {
       navItems1: [
-        { href: "/home-admin", icon: "home", label: "Accueil" },
-        { href: "/plats", icon: "skillet", label: "Plats" },
-        { href: "/stock", icon: "inventory", label: "Stock" },
+        { href: "home", icon: "home", label: "Accueil" },
+        { href: "plats", icon: "skillet", label: "Plats" },
+        { href: "stock", icon: "inventory", label: "Stock" },
       ],
       navItems2: [
-        { href: "/ajout-plats", icon: "add", label: "Ajouter un plat" },
-        { href: "/logout", icon: "logout", label: "Deconnexion" },
+        { href: "admin/ajout-plats", icon: "add", label: "Ajouter un plat" },
+        { href: "/login", icon: "logout", label: "Deconnexion" },
       ],
     };
   },

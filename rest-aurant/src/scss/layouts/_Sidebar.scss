@@ -8,6 +8,7 @@
     @include card-background($card-background);
     box-shadow: $card-background-hover;
     transition: $transition;
+    z-index: 999999999999999;
     animation: appearFromLeft .9s ease-out;
     &.collapsed {
         width: 85px;
@@ -41,22 +42,9 @@
             border-radius: 50%;
         }
         .toggler {
-            @include dimension(35px, 35px);
             @include align-items(center, absolute);
             right: 20px;
-            border: none;
-            border-radius: 8px;
-            color: $black-color;
-            cursor: pointer;
-            @include card-background($card-background);
-            transition: $transition;
-            span {
-                font-size: $normal-font-size;
-                transition: $transition;
-            }
-            &:hover {
-                background: $card-backgroundh;
-            }
+            @include nav-button();
         }
     }
 
