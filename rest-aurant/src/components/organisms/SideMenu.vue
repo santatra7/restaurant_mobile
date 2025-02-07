@@ -1,7 +1,7 @@
 <template>
   <aside ref="sidebar" class="sidebar collapsed">
     <header class="sidebar-header">
-      <a href="/home-admin" class="header-logo">
+      <a href="home" class="header-logo">
         <img src="@/assets/images/icone.svg" alt="logo">
       </a>
       <button ref="sidebarToggler" class="toggler sidebar-toggler">
@@ -31,7 +31,7 @@ export default {
         { href: "stock", icon: "inventory", label: "Stock" },
       ],
       navItems2: [
-        { href: "admin/ajout-plats", icon: "add", label: "Ajouter un plat" },
+        { href: "ajout", icon: "add", label: "Ajouter un plat" },
         { href: "/login", icon: "logout", label: "Deconnexion" },
       ],
     };

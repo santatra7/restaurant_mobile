@@ -29,6 +29,7 @@
 </template>
 
 <script>
+    import axios from "axios";
     import SideMenu from "../components/organisms/SideMenu.vue";
     import BaseInput from "../components/atoms/Input.vue";
     import PlatCard from "../components/molecules/Card.vue";
@@ -38,35 +39,13 @@
         components: { SideMenu, BaseInput, PlatCard },
         data() {
             return {
-                items: [
-                    { imageSrc: "pattes.svg", name: "Pattes mlay be tsy misy ohatrany zany", prix: 400 },
-                    { imageSrc: "poulet.svg", name: "Poulet", prix: 400 },
-                    { imageSrc: "riz.svg", name: "Vary mlay", prix: 400 },
-                    { imageSrc: "soupe.svg", name: "Lasoupy", prix: 400 },
-                    { imageSrc: "pattes.svg", name: "Tsy aiko intsony", prix: 400 },
-                    { imageSrc: "poulet.svg", name: "Poulet", prix: 400 },
-                    { imageSrc: "riz.svg", name: "Vary mlay", prix: 400 },
-                    { imageSrc: "soupe.svg", name: "Lasoupy", prix: 400 },
-                    { imageSrc: "pattes.svg", name: "Pattes mlay be tsy misy ohatrany zany", prix: 400 },
-                    { imageSrc: "poulet.svg", name: "Poulet", prix: 400 },
-                    { imageSrc: "riz.svg", name: "Vary mlay", prix: 400 },
-                    { imageSrc: "soupe.svg", name: "Lasoupy", prix: 400 },
-                    { imageSrc: "pattes.svg", name: "Tsy aiko intsony", prix: 400 },
-                    { imageSrc: "poulet.svg", name: "Poulet", prix: 400 },
-                    { imageSrc: "riz.svg", name: "Vary mlay", prix: 400 },
-                    { imageSrc: "soupe.svg", name: "Lasoupy", prix: 400 },
-                    { imageSrc: "pattes.svg", name: "Pattes  zany", prix: 400 },
-                    { imageSrc: "poulet.svg", name: "Poulet", prix: 400 },
-                    { imageSrc: "riz.svg", name: "Vary mlay", prix: 400 },
-                    { imageSrc: "soupe.svg", name: "Lasoupy", prix: 400 },
-                    { imageSrc: "pattes.svg", name: "Tsy aiko intsony", prix: 400 },
-                    { imageSrc: "poulet.svg", name: "Poulet", prix: 400 },
-                    { imageSrc: "riz.svg", name: "Vary mlay", prix: 400 },
-                    { imageSrc: "soupe.svg", name: "Lasoupy", prix: 400 },
-                ],
+                items: [],
                 currentPage: 1,
                 itemsPerPage: 8
             };
+        },
+        async mounted() {
+            await this.fetchPlats();
         },
         computed: {
             totalPages() {
@@ -78,6 +57,31 @@
             }
         },
         methods: {
+            async fetchPlats() {
+                try {
+                    const response = await axios.get("https://cuisine-qemt.onrender.com/api/plats");
+                    let plats = response.data.map(plat => ({
+                        id: plat.id, // On garde l'ID du plat
+                        imageSrc: plat.nom.toLowerCase().replace(/\s+/g, '-') + ".svg",
+                        name: plat.nom,
+                        prix: ""  // Le prix sera ajouté après la requête
+                    }));
+
+                    // Récupérer les prix pour chaque plat en parallèle
+                    await Promise.all(plats.map(async (plat) => {
+                        try {
+                            const prixResponse = await axios.get(`https://cuisine-qemt.onrender.com/api/plat/${plat.id}/prix`);
+                            plat.prix = prixResponse.data.montant || "";
+                        } catch (error) {
+                            console.warn(`Pas de prix trouvé pour ${plat.name}`);
+                        }
+                    }));
+
+                    this.items = plats;
+                } catch (error) {
+                    console.error("Erreur lors du chargement des plats :", error);
+                }
+            },
             goToPage(page) {
                 this.currentPage = page;
             }

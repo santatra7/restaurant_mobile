@@ -17,6 +17,7 @@
 </template>
 
 <script>
+    import axios from "axios";
     import SideMenu from "../components/organisms/SideMenu.vue";
     import BaseInput from "../components/atoms/Input.vue";
     import PlatCard from "../components/molecules/Card.vue";
@@ -28,17 +29,40 @@
         components: { SideMenu, BaseInput, PlatCard, ListIngredient, AjoutStock },
         data() {
             return {
-                items: [
-                    { imageSrc: "bouillon.svg", name: "bouillon", numberServed: 400 },
-                    { imageSrc: "charcuterie.svg", name: "charcuterie", numberServed: 100 },
-                    { imageSrc: "riz.svg", name: "riz", numberServed: 40 },
-                    { imageSrc: "fromage.svg", name: "fromage", numberServed: 50 },
-                    { imageSrc: "oeuf.svg", name: "oeuf", numberServed: 0 },
-                    { imageSrc: "oignon.svg", name: "oignon", numberServed: 500 },
-                    { imageSrc: "pain.svg", name: "pain", numberServed: 0 },
-                ]
+                items: []
             };
         },
+        async mounted() {
+            await this.fetchStock();
+        },
+        methods: {
+            async fetchStock() {
+                try {
+                    // Récupérer la liste des ingrédients
+                    const response = await axios.get("https://cuisine-qemt.onrender.com/api/ingredients");
+                    let ingredients = response.data.map(ingredient => ({
+                        id: ingredient.id, // On garde l'ID
+                        imageSrc: ingredient.nom.toLowerCase().replace(/\s+/g, '-') + ".svg",
+                        name: ingredient.nom,
+                        numberServed: 0 // La quantité sera mise à jour après
+                    }));
+
+                    // Récupérer la quantité en stock de chaque ingrédient en parallèle
+                    await Promise.all(ingredients.map(async (ingredient) => {
+                        try {
+                            const stockResponse = await axios.get(`https://cuisine-qemt.onrender.com/api/stock/etat/${ingredient.id}`);
+                            ingredient.numberServed = stockResponse.data.quantiteDisponible || 0;
+                        } catch (error) {
+                            console.warn(`Pas de stock trouvé pour ${ingredient.name}`);
+                        }
+                    }));
+
+                    this.items = ingredients;
+                } catch (error) {
+                    console.error("Erreur lors du chargement du stock :", error);
+                }
+            }
+        }
     };
 </script>
 
