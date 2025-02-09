@@ -42,6 +42,10 @@
                 </button>
             </div>
         </section>
+
+        <footer>
+
+        </footer>
     </main>
 </template>
 
@@ -160,7 +164,6 @@ main {
     .n3 {
         @include card-background($card-background);
         margin: 0 100px;
-        margin-bottom: 100px;
         height: 80vh;
         padding: 3rem;
         border-radius: 20px;
@@ -182,6 +185,12 @@ main {
 
     .pagination {
         @include verical-pagination();
+    }
+
+    footer {
+        @include dimension(100%, 200px);
+        background: $card-background;
+        margin-top: 200px;
     }
 }
 </style>
