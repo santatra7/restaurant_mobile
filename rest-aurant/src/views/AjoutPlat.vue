@@ -220,19 +220,14 @@ export default {
 
     /* Style des messages de succès/erreur */
     .message {
-        padding: 10px;
-        margin-top: 20px;
-        border-radius: 5px;
         text-align: center;
     }
-
-    .message.success {
-        background-color: #4CAF50;
-        color: white;
-    }
-
     .message.error {
-        background-color: #f44336;
-        color: white;
+      color: $secondary-color;
+      margin-top: 10px;
+    }
+    .message.success {
+      color: rgb(48, 53, 213);
+      margin-top: 10px;
     }
 </style>

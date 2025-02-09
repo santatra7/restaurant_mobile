@@ -1,8 +1,8 @@
 <template>
   <div class="stats-container">
-    <h2 class="stats-title">Statistiques des commandes</h2>
-    <p>Visualiser la liste de commande par semaine et effectuer des recherches par date. 😉
-      <br> Le nombre de commande actuel monte à {{ total }}</p>
+    <h2 class="stats-title">Statistiques des ventes</h2>
+    <p>Visualiser la liste de ventes par semaine et effectuer des recherches par date. 😉
+      <br> Le prix total actuel monte à {{ total }} MGA</p>
 
     <!-- Chart -->
     <div class="chart-container">

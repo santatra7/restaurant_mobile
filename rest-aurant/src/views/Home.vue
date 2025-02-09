@@ -24,6 +24,7 @@
         <h2 class="hh">Liste des commandes en cours</h2>
         <section class="n3">
             <div class="commande-cards-container">
+                <Loading v-if="isLoading" />
                 <Commandes
                     v-for="(item, index) in currentItems" 
                     :key="index"
@@ -44,45 +45,30 @@
         </section>
 
         <footer>
-
+            <p> 2929
+                2686
+                2674
+                2824</p>
         </footer>
     </main>
 </template>
 
 <script>
+import axios from "axios";
 import Commandes from "@/components/pages/Commandes.vue";
 import ButtonPrimary from "../components/atoms/Button.vue";
 import Clients from "../components/pages/Clients.vue";
+import Loading from "../components/atoms/Loading.vue";
 
 export default {
     name: "Home",
-    components: { ButtonPrimary, Clients, Commandes },
+    components: { ButtonPrimary, Clients, Commandes, Loading },
     data() {
         return {
-            commandes: [
-                { user: "Alice Dupont", plat: "Spaghetti Carbonara" },
-                { user: "Jean Martin", plat: "Pizza Margherita" },
-                { user: "Sophie Durant", plat: "Salade César" },
-                { user: "Paul Lefevre", plat: "Bœuf Bourguignon" },
-                { user: "Emma Petit", plat: "Ratatouille" },
-                { user: "Lucas Bernard", plat: "Poulet Basquaise" },
-                { user: "Charlotte Robert", plat: "Coq au Vin" },
-                { user: "Thomas Richard", plat: "Soupe à l'oignon" },
-                { user: "Camille Moreau", plat: "Quiche Lorraine" },
-                { user: "Antoine Laurent", plat: "Tarte Tatin" },
-                { user: "Alice Dupont", plat: "Spaghetti Carbonara" },
-                { user: "Jean Martin", plat: "Pizza Margherita" },
-                { user: "Sophie Durant", plat: "Salade César" },
-                { user: "Paul Lefevre", plat: "Bœuf Bourguignon" },
-                { user: "Emma Petit", plat: "Ratatouille" },
-                { user: "Lucas Bernard", plat: "Poulet Basquaise" },
-                { user: "Charlotte Robert", plat: "Coq au Vin" },
-                { user: "Thomas Richard", plat: "Soupe à l'oignon" },
-                { user: "Camille Moreau", plat: "Quiche Lorraine" },
-                { user: "Antoine Laurent", plat: "Tarte Tatin" },
-            ],
+            commandes: [],
             currentPage: 1,
             itemsPerPage: 12,
+            isLoading: true,
         };
     },
     computed: {
@@ -94,7 +80,35 @@ export default {
             return this.commandes.slice(start, start + this.itemsPerPage);
         }
     },
+    async mounted() {
+        await this.fetchCommandes();
+    },
     methods: {
+        async fetchCommandes() {
+            try {
+                // Récupérer les commandes
+                const response = await axios.get("https://cuisine-qemt.onrender.com/api/commande/simpleDetails");
+                const commandes = response.data;
+
+                // Récupérer les plats pour chaque commande
+                const commandesAvecPlats = await Promise.all(commandes.map(async (commande) => {
+                    const platsNoms = await Promise.all(commande.idPlats.map(async (idPlat) => {
+                        const platResponse = await axios.get(`https://cuisine-qemt.onrender.com/api/plat/${idPlat}`);
+                        return platResponse.data[0]?.nom || "Plat inconnu";
+                    }));
+
+                    return {
+                        user: commande.nomUtilisateur,
+                        plat: platsNoms.join(", ")
+                    };
+                }));
+
+                this.commandes = commandesAvecPlats;
+                this.isLoading = false;
+            } catch (error) {
+                console.error("Erreur lors de la récupération des commandes :", error);
+            }
+        },
         goToPage(page) {
             this.currentPage = page;
         }
@@ -119,6 +133,7 @@ main {
             display: flex;
             align-items: center;
             position: fixed;
+            z-index: 999999999999999;
 
             .button {
                 @include position-absolute(auto, auto, auto, 500px, auto);
@@ -175,7 +190,7 @@ main {
         .commande-cards-container {
             @include plat-card();
             article {
-                height: 100px;
+                height: 120px;
                 .text {
                     margin: 0;
                 }
@@ -191,6 +206,11 @@ main {
         @include dimension(100%, 200px);
         background: $card-background;
         margin-top: 200px;
+        p {
+            color: $secondary-color;
+            margin: 20px 100px;
+            font-size: 20px;
+        }
     }
 }
 </style>

@@ -57,9 +57,9 @@ export default {
     methods: {
         async fetchSales() {
             try {
-                const response = await axios.get("https://cuisine-qemt.onrender.com/api/commandes/par-jour");
+                const response = await axios.get("https://cuisine-qemt.onrender.com/api/chiffre-affaire/par-jour");
                 this.sales = response.data.reduce((acc, sale) => {
-                    acc[sale.jour] = sale.nombre;
+                    acc[sale.jour] = sale.chiffreAffaire;
                     return acc;
                 }, {});
             } catch (error) {
