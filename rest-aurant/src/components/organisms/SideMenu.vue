@@ -10,7 +10,7 @@
     </header>
     <nav class="sidebar-nav">
       <Navbar :items="navItems1" type="primary-nav" />
-      <Navbar :items="navItems2" type="secondary-nav" />
+      <Navbar :items="navItems2" type="secondary-nav" @logout="logout" />
     </nav>
   </aside>
 </template>
@@ -32,7 +32,7 @@ export default {
       ],
       navItems2: [
         { href: "ajout", icon: "add", label: "Ajouter un plat" },
-        { href: "/login", icon: "logout", label: "Deconnexion" },
+        { href: "#", icon: "logout", label: "Deconnexion" }, // Modifié href pour éviter la redirection immédiate
       ],
     };
   },
@@ -45,6 +45,12 @@ export default {
         sidebar.classList.toggle("collapsed");
       });
     }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("user");
+      this.$router.push("/");
+    },
   },
 };
 </script>

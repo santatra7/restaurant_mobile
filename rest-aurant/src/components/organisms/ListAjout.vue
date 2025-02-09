@@ -14,32 +14,37 @@
       :key="index"
       :imageSrc="item.imageSrc"
       :name="item.name"
+      :numberServed="item.quantity" 
       @delete="$emit('remove', item)"
+      @updateQuantity="updateQuantity(index, $event)"
     />
   </section>
 </template>
 
-  
-  <script>
-  import AjoutIng from "../molecules/AjoutIng.vue";
-  
-  export default {
-    name: "ListAjout",
-    components: { AjoutIng },
-    props: {
-        items: {
-            type: Array,
-            required: true,
-            default: () => [],
-        },
+<script>
+import AjoutIng from "../molecules/AjoutIng.vue";
+export default {
+  name: "ListAjout",
+  components: { AjoutIng },
+  props: {
+    items: {
+      type: Array,
+      required: true,
+      default: () => [],
     },
-    methods: {
-      removeIngredient(index) {
-        this.items.splice(index, 1);
-      },
+  },
+  methods: {
+    removeIngredient(index) {
+      this.items.splice(index, 1);
     },
-  };
-  </script>
+    updateQuantity(index, quantity) {
+      if (typeof quantity === "number") {
+        this.items[index].quantity = quantity; // Mettre à jour la quantité dans l'élément
+      }
+    },
+  },
+};
+</script>
   
   <style lang="scss">
     @use "@/scss/layouts/liste" as *;

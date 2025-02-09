@@ -115,3 +115,16 @@
       transform: translateY(20px) rotate(5deg);
   }
 }
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.5;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+    scale: 1;
+  }
+}

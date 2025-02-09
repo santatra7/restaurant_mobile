@@ -1,12 +1,15 @@
 <template>
     <!-- HEADERS -->
     <SideMenu></SideMenu>
-    <BaseInput class="search" v-model="search" placeholder="🔎   Rechercher par ici" type="email" />
+    <BaseInput class="search" v-model="search" placeholder="🔎   Rechercher par ici" type="text" />
     <h1>Plats <span>existant.</span></h1>
 
     <!-- BODY -->
     <div class="home-admin-container" id="plats">
         <div class="plats-cards-container">
+            <!-- Afficher un Loading pendant que les plats sont en cours de chargement -->
+            <Loading v-if="loadingPlats" />
+            
             <PlatCard
               v-for="(item, index) in currentItems" 
               :key="index"
@@ -29,65 +32,89 @@
 </template>
 
 <script>
-    import axios from "axios";
-    import SideMenu from "../components/organisms/SideMenu.vue";
-    import BaseInput from "../components/atoms/Input.vue";
-    import PlatCard from "../components/molecules/Card.vue";
+import axios from "axios";
+import SideMenu from "../components/organisms/SideMenu.vue";
+import BaseInput from "../components/atoms/Input.vue";
+import PlatCard from "../components/molecules/Card.vue";
+import Loading from "../components/atoms/Loading.vue";  // Ajouter le composant Loading
 
-    export default {
-        name: "Plats",
-        components: { SideMenu, BaseInput, PlatCard },
-        data() {
-            return {
-                items: [],
-                currentPage: 1,
-                itemsPerPage: 8
-            };
-        },
-        async mounted() {
-            await this.fetchPlats();
-        },
-        computed: {
-            totalPages() {
-                return Math.ceil(this.items.length / this.itemsPerPage);
-            },
-            currentItems() {
-                const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-                return this.items.slice(startIndex, startIndex + this.itemsPerPage);
+export default {
+    name: "Plats",
+    components: { SideMenu, BaseInput, PlatCard, Loading },  // Déclarer le composant Loading
+    data() {
+        return {
+            items: [], // Liste complète des plats
+            search: "", // Texte de recherche
+            currentPage: 1,
+            itemsPerPage: 8,
+            loadingPlats: false // Etat pour savoir si les plats sont en chargement
+        };
+    },
+    async mounted() {
+        await this.fetchPlats();
+    },
+    computed: {
+        filteredPlats() {
+            if (!this.search.trim()) {
+                return this.items;
             }
+
+            const searchTerm = this.normalizeText(this.search);
+
+            return this.items.filter(plat =>
+                this.normalizeText(plat.name).includes(searchTerm)
+            );
         },
-        methods: {
-            async fetchPlats() {
-                try {
-                    const response = await axios.get("https://cuisine-qemt.onrender.com/api/plats");
-                    
-                    let plats = response.data.map((plat, index) => ({
-                        id: plat.id, // On garde l'ID du plat
-                        imageSrc: `${(index % 4) + 1}.svg`, // Alterne entre 1.svg, 2.svg, 3.svg et 4.svg
-                        name: plat.nom,
-                        prix: ""  // Le prix sera ajouté après la requête
-                    }));
-
-                    // Récupérer les prix pour chaque plat en parallèle
-                    await Promise.all(plats.map(async (plat) => {
-                        try {
-                            const prixResponse = await axios.get(`https://cuisine-qemt.onrender.com/api/plat/${plat.id}/prix`);
-                            plat.prix = prixResponse.data.montant || "";
-                        } catch (error) {
-                            console.warn(`Pas de prix trouvé pour ${plat.name}`);
-                        }
-                    }));
-
-                    this.items = plats;
-                } catch (error) {
-                    console.error("Erreur lors du chargement des plats :", error);
-                }
-            },
-            goToPage(page) {
-                this.currentPage = page;
-            }
+        totalPages() {
+            return Math.ceil(this.filteredPlats.length / this.itemsPerPage);
+        },
+        currentItems() {
+            const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+            return this.filteredPlats.slice(startIndex, startIndex + this.itemsPerPage);
         }
-    };
+    },
+    methods: {
+        async fetchPlats() {
+            this.loadingPlats = true; // Activer le chargement au début
+
+            try {
+                const response = await axios.get("https://cuisine-qemt.onrender.com/api/plats");
+
+                let plats = response.data.map((plat, index) => ({
+                    id: plat.id, 
+                    imageSrc: `${(index % 4) + 1}.svg`,
+                    name: plat.nom,
+                    prix: ""  
+                }));
+
+                // Récupérer les prix pour chaque plat en parallèle
+                await Promise.all(plats.map(async (plat) => {
+                    try {
+                        const prixResponse = await axios.get(`https://cuisine-qemt.onrender.com/api/plat/${plat.id}/prix`);
+                        plat.prix = prixResponse.data.montant || "";
+                    } catch (error) {
+                        console.warn(`Pas de prix trouvé pour ${plat.name}`);
+                    }
+                }));
+
+                this.items = plats;
+            } catch (error) {
+                console.error("Erreur lors du chargement des plats :", error);
+            } finally {
+                this.loadingPlats = false; // Désactiver le chargement après la récupération des plats
+            }
+        },
+        goToPage(page) {
+            this.currentPage = page;
+        },
+        normalizeText(text) {
+            return text
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, ""); // Supprime les accents
+        }
+    }
+};
 </script>
 
 

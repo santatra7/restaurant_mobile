@@ -1,31 +1,33 @@
 <template>
-    <div class="counter">
-      <button @click="decrement" :disabled="modelValue <= 0">−</button>
-      <span>{{ modelValue }}</span>
-      <button @click="increment">+</button>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "CounterButton",
-    data() {
-      return {
-        modelValue: 1, // Valeur initiale
-      };
+  <div class="counter">
+    <button @click="decrement" :disabled="modelValue <= 1">−</button>
+    <span>{{ modelValue }}</span>
+    <button @click="increment">+</button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "CounterButton",
+  props: {
+    modelValue: {
+      type: Number,
+      required: true,
+      default: 1 // Valeur par défaut si non définie
+    }
+  },
+  methods: {
+    increment() {
+      this.$emit('update', this.modelValue + 1); // Incrementer la valeur et émettre
     },
-    methods: {
-      increment() {
-        this.modelValue += 1; // Incrémente la valeur
-      },
-      decrement() {
-        if (this.modelValue > 1) {
-          this.modelValue -= 1; // Décrémente la valeur
-        }
-      },
-    },
-  };
-  </script>
+    decrement() {
+      if (this.modelValue > 0) {
+        this.$emit('update', this.modelValue - 1); // Decrementer la valeur et émettre
+      }
+    }
+  }
+};
+</script>
   
 <style lang="scss">
   .counter {

@@ -58,6 +58,9 @@
         align-items: center;
         padding: 70px;
         color: $primary-color;
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
         h3 {
             width: 80%;
             font-size: 50px;
@@ -72,5 +75,8 @@
         @include dimension(38%, 100%);
         @include list(80vh);
         height: 500px;
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
     }
 </style>

@@ -19,20 +19,44 @@
         <section class="n2">
             <Clients/>
         </section>
+        <section class="n3">
+            <div class="commande-cards-container">
+                <Commandes
+                    v-for="(item, index) in currentItems" 
+                    :key="index"
+                    :imageSrc="item.imageSrc"
+                    :name="item.name"
+                    :prix="item.prix"
+                />
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button 
+                v-for="page in totalPages" 
+                :key="page"
+                :class="['pagination-button', { 'active': currentPage === page }]"
+                @click="goToPage(page)">
+                </button>
+            </div>
+        </section>
     </main>
 </template>
 
 <script>
+import Commandes from "@/components/pages/Commandes.vue";
 import ButtonPrimary from "../components/atoms/Button.vue";
 import Clients from "../components/pages/Clients.vue";
 
 export default {
     name: "Home",
-    components: { ButtonPrimary, Clients },
+    components: { ButtonPrimary, Clients, Commandes },
 };
 </script>
 
 <style lang="scss">
+@use "@/scss/layouts/liste" as *;
+@use "@/scss/components/pagination" as *;
 main {
     @include background-image-gradient($sky);
     .home-container {
@@ -60,7 +84,9 @@ main {
 
         .n1 {
             position: relative;
-            animation: fadeIn 0.6s ease-out forwards;
+            animation: appear linear;
+            animation-timeline: view();
+            animation-range: entry 0% cover 40%;
 
             .logo {
                 width: 800px;
@@ -74,12 +100,32 @@ main {
         }
     }
     .n2 {
-        margin: 0 100px;
+        margin: 50px 100px;
         height: 80vh;
         outline: none;
         display: flex;
         justify-content: space-between;
         align-items: stretch;
+    }
+
+    .n3 {
+        @include card-background($card-background);
+        margin: 150px 100px;
+        height: 80vh;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: $box-shadow;
+        display: flex;
+        animation: appear linear;
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+        .commande-cards-container {
+            @include plat-card();
+        }
+    }
+
+    .pagination {
+        @include verical-pagination();
     }
 }
 </style>
