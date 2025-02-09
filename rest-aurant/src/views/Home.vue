@@ -206,10 +206,10 @@ main {
         @include dimension(100%, 200px);
         background: $card-background;
         margin-top: 200px;
+        @include align-items(center, relative);
         p {
             color: $secondary-color;
-            margin: 20px 100px;
-            font-size: 20px;
+            font-size: 30px;
         }
     }
 }
