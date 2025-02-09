@@ -2,7 +2,7 @@
     <article>
         <figure>
             <img v-if="computedImageSrc" :src="computedImageSrc" :alt="name" />
-            <img v-else src="../../assets/images/plats/default.jpg" alt="Image par défaut" />
+            <!-- <img v-else src="../../assets/images/plats/default.jpg" alt="Image par défaut" /> -->
         </figure>
         <div class="text">
             <h2>{{ name }}</h2>

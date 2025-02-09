@@ -16,17 +16,19 @@
                 <img class="logo" src="../assets/images/logo.svg" alt="">
             </section>
         </div>
+
         <section class="n2">
-            <Clients/>
+            <Clients />
         </section>
+
+        <h2 class="hh">Liste des commandes en cours</h2>
         <section class="n3">
             <div class="commande-cards-container">
                 <Commandes
                     v-for="(item, index) in currentItems" 
                     :key="index"
-                    :imageSrc="item.imageSrc"
-                    :name="item.name"
-                    :prix="item.prix"
+                    :user="item.user"
+                    :plat="item.plat"
                 />
             </div>
 
@@ -51,6 +53,48 @@ import Clients from "../components/pages/Clients.vue";
 export default {
     name: "Home",
     components: { ButtonPrimary, Clients, Commandes },
+    data() {
+        return {
+            commandes: [
+                { user: "Alice Dupont", plat: "Spaghetti Carbonara" },
+                { user: "Jean Martin", plat: "Pizza Margherita" },
+                { user: "Sophie Durant", plat: "Salade César" },
+                { user: "Paul Lefevre", plat: "Bœuf Bourguignon" },
+                { user: "Emma Petit", plat: "Ratatouille" },
+                { user: "Lucas Bernard", plat: "Poulet Basquaise" },
+                { user: "Charlotte Robert", plat: "Coq au Vin" },
+                { user: "Thomas Richard", plat: "Soupe à l'oignon" },
+                { user: "Camille Moreau", plat: "Quiche Lorraine" },
+                { user: "Antoine Laurent", plat: "Tarte Tatin" },
+                { user: "Alice Dupont", plat: "Spaghetti Carbonara" },
+                { user: "Jean Martin", plat: "Pizza Margherita" },
+                { user: "Sophie Durant", plat: "Salade César" },
+                { user: "Paul Lefevre", plat: "Bœuf Bourguignon" },
+                { user: "Emma Petit", plat: "Ratatouille" },
+                { user: "Lucas Bernard", plat: "Poulet Basquaise" },
+                { user: "Charlotte Robert", plat: "Coq au Vin" },
+                { user: "Thomas Richard", plat: "Soupe à l'oignon" },
+                { user: "Camille Moreau", plat: "Quiche Lorraine" },
+                { user: "Antoine Laurent", plat: "Tarte Tatin" },
+            ],
+            currentPage: 1,
+            itemsPerPage: 12,
+        };
+    },
+    computed: {
+        totalPages() {
+            return Math.ceil(this.commandes.length / this.itemsPerPage);
+        },
+        currentItems() {
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            return this.commandes.slice(start, start + this.itemsPerPage);
+        }
+    },
+    methods: {
+        goToPage(page) {
+            this.currentPage = page;
+        }
+    }
 };
 </script>
 
@@ -108,9 +152,15 @@ main {
         align-items: stretch;
     }
 
+
+    .hh {
+        margin: 0 100px;
+        @include titre2();
+    }
     .n3 {
         @include card-background($card-background);
-        margin: 150px 100px;
+        margin: 0 100px;
+        margin-bottom: 100px;
         height: 80vh;
         padding: 3rem;
         border-radius: 20px;
@@ -121,6 +171,12 @@ main {
         animation-range: entry 0% cover 40%;
         .commande-cards-container {
             @include plat-card();
+            article {
+                height: 100px;
+                .text {
+                    margin: 0;
+                }
+            }
         }
     }
 

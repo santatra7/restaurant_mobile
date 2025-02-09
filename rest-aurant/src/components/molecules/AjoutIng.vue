@@ -6,7 +6,7 @@
 
     <figure id="plats">
       <img v-if="computedImageSrc" :src="computedImageSrc" :alt="name" />
-      <img v-else src="../../assets/images/ingredients/default.jpg" alt="Image par défaut" />
+      <!-- <img v-else src="../../assets/images/ingredients/default.jpg" alt="Image par défaut" /> -->
     </figure>
 
     <div class="text">
