@@ -19,6 +19,13 @@
     background-attachment: fixed;
 }
 
+@mixin background-image-gradient($image) {
+    background-image: linear-gradient(rgba(48, 26, 121, 0.9),rgba(0,0,0,0)), url($image);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 @mixin dimension($width, $height) {
     width: $width;
     height: $height;
@@ -62,6 +69,17 @@
     font-size: 50px;
     color: $primary-color;
     animation: appearFromLeft .9s ease-out;
+    span {
+        font-size: 50px;
+        color: $secondary-color;
+        font-weight: 100;
+    }
+}
+
+@mixin titre2() {
+    @include position-absolute(auto, auto, auto, auto, 400px);
+    font-size: 50px;
+    color: $primary-color;
     span {
         font-size: 50px;
         color: $secondary-color;

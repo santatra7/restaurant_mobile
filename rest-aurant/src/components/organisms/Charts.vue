@@ -1,33 +1,33 @@
 <template>
-    <div class="stats-container">
-      <h2 class="stats-title">Statistiques des ventes</h2>
-      <p>Visualiser la liste de vente par semaine effectuer des recherches par date. 😉
-        <br> Le chiffre d'affaire actuel monte à 300000MGA</p>
-  
-      <!-- Chart -->
-      <div class="chart-container">
-        <BarChart :chart-data="chartData" :options="chartOptions" />
-      </div>
-  
-      <!-- Boutons de navigation -->
-      <div class="navigation">
-        <!-- Sélecteur de date -->
-        <div class="date-picker">
-          <input type="date" v-model="selectedDate" @change="goToDate" />
-        </div>
-        <button @click="previousWeek">
-          <span class="material-symbols-rounded">chevron_left</span>
-        </button>
-        <button @click="nextWeek">
-          <span class="material-symbols-rounded">chevron_right</span>
-        </button>
-      </div>
+  <div class="stats-container">
+    <h2 class="stats-title">Statistiques des commandes</h2>
+    <p>Visualiser la liste de commande par semaine et effectuer des recherches par date. 😉
+      <br> Le nombre de commande actuel monte à {{ total }}</p>
+
+    <!-- Chart -->
+    <div class="chart-container">
+      <BarChart :chart-data="chartData" :options="chartOptions" />
     </div>
-  </template>
+
+    <!-- Boutons de navigation -->
+    <div class="navigation">
+      <!-- Sélecteur de date -->
+      <div class="date-picker">
+        <input type="date" v-model="selectedDate" @change="goToDate" />
+      </div>
+      <button @click="previousWeek">
+        <span class="material-symbols-rounded">chevron_left</span>
+      </button>
+      <button @click="nextWeek">
+        <span class="material-symbols-rounded">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</template>
   
-  <script>
+<script>
   import BarChart from "../molecules/BarChart.vue";
-  
+
   export default {
     name: "Charts",
     components: { BarChart },
@@ -60,12 +60,15 @@
           return this.salesData[dateString] || 0;
         });
       },
+      total() {
+        return this.filteredSales.reduce((sum, sales) => sum + sales, 0);
+      },
       chartData() {
         return {
           labels: this.weekDays.map((day) => day.name),
           datasets: [
             {
-              label: "Ventes (MGA)",
+              label: "Nombre de commande",
               data: this.filteredSales,
               backgroundColor: this.weekDays.map((day) =>
                 day.date > this.today && this.currentWeekStart <= this.today
@@ -127,7 +130,7 @@
       },
     },
   };
-  </script>
+</script>
   
   <style lang="scss">
   @use "@/scss/components/charts" as *;

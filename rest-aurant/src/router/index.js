@@ -4,10 +4,12 @@ import HomeAdmin from '../views/HomeAdmin.vue'
 import Plats from '../views/Plats.vue'
 import Stock from '../views/Stock.vue'
 import AjoutPlat from '../views/AjoutPlat.vue'
+import Home from '../views/Home.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/', name: 'Home', component: Home, },
     { path: '/login', name: 'login', component: Login, },
     { path: '/admin', name: 'home-admin', component: HomeAdmin, },
     { path: '/admin/home', name: 'home-admin', component: HomeAdmin, },

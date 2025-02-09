@@ -60,9 +60,10 @@
             async fetchPlats() {
                 try {
                     const response = await axios.get("https://cuisine-qemt.onrender.com/api/plats");
-                    let plats = response.data.map(plat => ({
+                    
+                    let plats = response.data.map((plat, index) => ({
                         id: plat.id, // On garde l'ID du plat
-                        imageSrc: plat.nom.toLowerCase().replace(/\s+/g, '-') + ".svg",
+                        imageSrc: `${(index % 4) + 1}.svg`, // Alterne entre 1.svg, 2.svg, 3.svg et 4.svg
                         name: plat.nom,
                         prix: ""  // Le prix sera ajouté après la requête
                     }));

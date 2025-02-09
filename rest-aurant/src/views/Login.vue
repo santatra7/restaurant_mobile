@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
       <div class="login-card">
-        <img src="../assets/images/logo.png" alt="Logo" class="login-logo" />
+        <img src="../assets/images/logo.svg" alt="Logo" class="login-logo" />
         <!-- <h2>Connexion</h2> -->
         <BaseInput class="input" v-model="email" placeholder="E-mail" type="email" />
         <BaseInput class="input" v-model="password" placeholder="Mot de passe" type="password" />
